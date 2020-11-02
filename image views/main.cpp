@@ -104,7 +104,7 @@ private:
         pickPhysicalDevice();
         createLogicalDevice();
         createSwapChain();
-        createImageViews();
+        createImageViews();//在创建交换链完成之后调用创建视图函数
     }
 
     void mainLoop() {
@@ -321,11 +321,11 @@ private:
     }
 
     void createImageViews() {
-        swapChainImageViews.resize(swapChainImages.size());
+        swapChainImageViews.resize(swapChainImages.size());//定义保存图像视图集合大小，图像视图描述了如何访问图像以及访问图像的哪一部分
 
-        for (size_t i = 0; i < swapChainImages.size(); i++) {
+        for (size_t i = 0; i < swapChainImages.size(); i++) {//循环迭代所有交换链中的图像
             VkImageViewCreateInfo createInfo{};
-            createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+            createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;//用于描述图像数据该被如何解释，例如1D textures, 2D textures, 3D textures 和cube maps。
             createInfo.image = swapChainImages[i];
             createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
             createInfo.format = swapChainImageFormat;
@@ -333,7 +333,7 @@ private:
             createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
             createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
             createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-            createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;//subresourceRange字段描述图像的用途以及应该访问图像的哪一部分。我们的图像将用作颜色目标，而没有任何映射级别或多层。
             createInfo.subresourceRange.baseMipLevel = 0;
             createInfo.subresourceRange.levelCount = 1;
             createInfo.subresourceRange.baseArrayLayer = 0;
